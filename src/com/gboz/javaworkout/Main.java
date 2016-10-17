@@ -18,26 +18,26 @@ public class Main {
 //        var.KeyWordsOutput(var.keyWords);
 
         //metody globalizacji
-//        System.out.print("coordinate n: ");
-//        Scanner scanner = new Scanner(System.in);
-//        int n = scanner.nextInt();
-//        System.out.print("coordinate m: ");
-//        int m = scanner.nextInt();
-//
-//        Random random = new Random();
-//        int randomNumber = 0;
-//        System.out.println(randomNumber);
-//        for (int i = 0; i < n; i++) {
-//            for (int j = 0; j < m; j++) {
-//                randomNumber = random.nextInt(2);
-//                System.out.print(randomNumber + " ");
-//            }
-//            System.out.println(randomNumber);
-//        }
+        System.out.print("coordinate n: ");
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        System.out.print("coordinate m: ");
+        int m = scanner.nextInt();
+
+        Random random = new Random();
+        int randomNumber = 0;
+        System.out.println(randomNumber);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                randomNumber = random.nextInt(2);
+                System.out.print(randomNumber + " ");
+            }
+            System.out.println(randomNumber);
+        }
 
         //java kompendium
         //zmienna liczba argumentów
 
-        varargs(1, 5, 151353);
+//        varargs(1, 5, 151353);
     }
 }
