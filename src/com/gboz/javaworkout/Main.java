@@ -83,9 +83,9 @@ public class Main {
     }
 
     //selekcja zajęcia 2
-    public static void ranking(double A, double w) {
-        int lastIndex = doubleSeq.length - 1; 
-        int oneBeforeLastIndex = lastIndex - 1; 
+    public static void bubbleSort(double A, double w) {
+        int lastIndex = doubleSeq.length - 1;
+        int oneBeforeLastIndex = lastIndex - 1;
         double doubleVar;
         String binaryVar;
         while (oneBeforeLastIndex >= 0) {
@@ -103,18 +103,24 @@ public class Main {
                 oneBeforeLastIndex--;
             }
         }
+    }
+
+    public static void ranking() {
+        bubbleSort(A, w);
         int index;
+        String binaryVarTab[] = new String[k];
+        double doubleVarTab[] = new double[k];
         for (int i = 0; i < doubleSeq.length; i++) {
             index = (0 + (int) (Math.random() * (((doubleSeq.length - 1) - 0) + 1)));
             index = (0 + (int) (Math.random() * (((index) - 0) + 1)));
-            doubleSeq[i] = doubleSeq[index];
-            binarySeq[i] = binarySeq[index];
+            doubleVarTab[i] = doubleSeq[index];
+            binaryVarTab[i] = binarySeq[index];
         }
     }
 
     public static void builderSelection() {
         System.out.println("\n##########Selekcja metodą rankingową BEGIN##########\n");
-        ranking(A, w);
+        ranking();
         System.out.println("ciągi binarne: ");
         for (int i = 0; i < k; i++) {
             System.out.println(binarySeq[i]);
