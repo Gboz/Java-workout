@@ -73,14 +73,65 @@ public class Main {
         }
     }
 
-    public static void builder() {
+    public static void builderPopulation() {
+        System.out.println("\n##########Tworzenie populacji BEGIN##########\n");
         binaryLength();
         getBinarySeq();
         getPointsAfterTranslate();
         getRastriginResults();
+        System.out.println("\n##########Tworzenie populacji END##########\n");
+    }
+
+    //selekcja zajęcia 2
+    public static void ranking(double A, double w) {
+        int lastIndex = doubleSeq.length - 1; 
+        int oneBeforeLastIndex = lastIndex - 1; 
+        double doubleVar;
+        String binaryVar;
+        while (oneBeforeLastIndex >= 0) {
+            if (rastriginFunction(doubleSeq[oneBeforeLastIndex], A, w) < rastriginFunction(doubleSeq[lastIndex], A, w)) {
+                doubleVar = doubleSeq[oneBeforeLastIndex];
+                binaryVar = binarySeq[oneBeforeLastIndex];
+                doubleSeq[oneBeforeLastIndex] = doubleSeq[lastIndex];
+                binarySeq[oneBeforeLastIndex] = binarySeq[lastIndex];
+                doubleSeq[lastIndex] = doubleVar;
+                binarySeq[lastIndex] = binaryVar;
+                lastIndex = doubleSeq.length - 1;
+                oneBeforeLastIndex = lastIndex - 1;
+            } else {
+                lastIndex--;
+                oneBeforeLastIndex--;
+            }
+        }
+        int index;
+        for (int i = 0; i < doubleSeq.length; i++) {
+            index = (0 + (int) (Math.random() * (((doubleSeq.length - 1) - 0) + 1)));
+            index = (0 + (int) (Math.random() * (((index) - 0) + 1)));
+            doubleSeq[i] = doubleSeq[index];
+            binarySeq[i] = binarySeq[index];
+        }
+    }
+
+    public static void builderSelection() {
+        System.out.println("\n##########Selekcja metodą rankingową BEGIN##########\n");
+        ranking(A, w);
+        System.out.println("ciągi binarne: ");
+        for (int i = 0; i < k; i++) {
+            System.out.println(binarySeq[i]);
+        }
+        System.out.println("punkty: ");
+        for (int i = 0; i < k; i++) {
+            System.out.println(doubleSeq[i]);
+        }
+        System.out.println("wartości funkcji");
+        for (int i = 0; i < k; i++) {
+            System.out.println("x" + i + " = " + rastriginFunction(doubleSeq[i], A, w));
+        }
+        System.out.println("\n##########Selekcja metodą rankingową END##########\n");
     }
 
     public static void main(String[] args) {
-        builder();
+        builderPopulation();
+        builderSelection();
     }
 }
