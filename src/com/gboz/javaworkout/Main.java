@@ -2,6 +2,16 @@ package com.gboz.javaworkout;
 
 public class Main {
 
+    static private double A = 10;
+    static private double w = 20 * Math.PI;
+    static private double a = -1.0;
+    static private double b = 1.0;
+    static private double d = 6.0;
+    static private int k = 5;
+    static private int m = 0;
+    static private String binarySeq[];
+    static private double doubleSeq[];
+
     public static String generateBinary(int len) {
         String binary = "";
         for (int i = 0; i < len; i++) {
@@ -29,31 +39,45 @@ public class Main {
         return a + (b - a) * num / (Math.pow(2, m) - 1);
     }
 
-    public static void main(String[] args) {
-        double A = 10, w = 20 * Math.PI, a = -1.0, b = 1.0, d = 6.0;
-        int k = 3, m = 0;
-
+    public static int binaryLength() {
         double value = (b - a) * Math.pow(10, d);
         while (value >= Math.pow(2, m)) {
             m++;
         }
+        System.out.println("długość łańcucha: " + m);
+        return m;
+    }
 
-        System.out.println("m: " + m);
-        String binarySeq[] = new String[k];
-        double doubleSeq[] = new double[k];
+    public static void getBinarySeq() {
         System.out.println("ciągi binarne: ");
+        binarySeq = new String[k];
+        doubleSeq = new double[k];
         for (int i = 0; i < k; i++) {
             binarySeq[i] = generateBinary(m);
             doubleSeq[i] = translate(binaryToDecimal(binarySeq[i]), a, b, m);
             System.out.println(binarySeq[i]);
         }
-        System.out.println("punkty po przekształceniu");
+    }
+
+    public static void getPointsAfterTranslate() {
+        System.out.println("punkty po przekształceniu: ");
         for (int i = 0; i < k; i++) {
             System.out.println(doubleSeq[i]);
         }
-        System.out.println("wartości funkcji Rastrigina");
+    }
+
+    public static void getRastriginResults() {
+        System.out.println("wartości funkcji Rastrigina: ");
         for (int i = 0; i < k; i++) {
             System.out.println("x" + i + " = " + rastriginFunction(doubleSeq[i], A, w));
         }
+    }
+
+    public static void main(String[] args) {
+        binaryLength();
+        getBinarySeq();
+        getPointsAfterTranslate();
+        getRastriginResults();
+
     }
 }
