@@ -83,7 +83,7 @@ public class Main {
     }
 
     //selekcja zajęcia 2
-    public static void bubbleSort(double A, double w) {
+    private static void bubbleSort(double A, double w) {
         int lastIndex = doubleSeq.length - 1;
         int oneBeforeLastIndex = lastIndex - 1;
         double doubleVar;
@@ -105,7 +105,7 @@ public class Main {
         }
     }
 
-    public static void ranking() {
+    private static void ranking() {
         bubbleSort(A, w);
         int index;
         for (int i = 0; i < doubleSeq.length; i++) {
@@ -116,7 +116,7 @@ public class Main {
         }
     }
 
-    public static void builderSelection() {
+    private static void builderSelection() {
         System.out.println("\n##########Selekcja metodą rankingową BEGIN##########\n");
         ranking();
         System.out.println("ciągi binarne: ");
