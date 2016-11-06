@@ -6,21 +6,20 @@ public class Main {
     static private double w = 20 * Math.PI;
     static private double a = -1.0;
     static private double b = 1.0;
-    static private double d = 6.0;
-    static private int k = 5;
+    static private int k = 10;
     static private int m = 0;
     static private String binarySeq[];
     static private double doubleSeq[];
 
-    public static String generateBinary(int len) {
+    private static String generateBinary(int len) {
         String binary = "";
         for (int i = 0; i < len; i++) {
-            binary += 0 + (int) (Math.random() * ((1 - 0) + 1));
+            binary += (int)(Math.random() * 2);
         }
         return binary;
     }
 
-    public static int binaryToDecimal(String binary) {
+    private static int binaryToDecimal(String binary) {
         char[] numbers = binary.toCharArray();
         int val = 0;
         for (int i = numbers.length - 1; i >= 0; i--) {
@@ -31,15 +30,16 @@ public class Main {
         return val;
     }
 
-    public static double rastriginFunction(double x, double A, double w) {
+    private static double rastriginFunction(double x, double A, double w) {
         return A + Math.pow(x, 2) - A * Math.cos(w * x);
     }
 
-    public static double translate(int num, double a, double b, int m) {
+    private static double translate(int num, double a, double b, int m) {
         return a + (b - a) * num / (Math.pow(2, m) - 1);
     }
 
-    public static int binaryLength() {
+    private static int binaryLength() {
+        double d = 6.0;
         double value = (b - a) * Math.pow(10, d);
         while (value >= Math.pow(2, m)) {
             m++;
@@ -48,7 +48,7 @@ public class Main {
         return m;
     }
 
-    public static void getBinarySeq() {
+    private static void getBinarySeq() {
         System.out.println("ciągi binarne: ");
         binarySeq = new String[k];
         doubleSeq = new double[k];
@@ -59,21 +59,21 @@ public class Main {
         }
     }
 
-    public static void getPointsAfterTranslate() {
+    private static void getPointsAfterTranslate() {
         System.out.println("punkty po przekształceniu: ");
         for (int i = 0; i < k; i++) {
             System.out.println(doubleSeq[i]);
         }
     }
 
-    public static void getRastriginResults() {
+    private static void getRastriginResults() {
         System.out.println("wartości funkcji Rastrigina: ");
         for (int i = 0; i < k; i++) {
             System.out.println("x" + i + " = " + rastriginFunction(doubleSeq[i], A, w));
         }
     }
 
-    public static void builderPopulation() {
+    private static void builderPopulation() {
         System.out.println("\n##########Tworzenie populacji BEGIN##########\n");
         binaryLength();
         getBinarySeq();
@@ -111,8 +111,8 @@ public class Main {
         String binaryVarTab[] = new String[k];
         double doubleVarTab[] = new double[k];
         for (int i = 0; i < doubleSeq.length; i++) {
-            index = (0 + (int) (Math.random() * (((doubleSeq.length - 1) - 0) + 1)));
-            index = (0 + (int) (Math.random() * (((index) - 0) + 1)));
+            index = ((int) (Math.random() * (((doubleSeq.length - 1)) + 1)));
+            index = ((int) (Math.random() * (((index)) + 1)));
             doubleVarTab[i] = doubleSeq[index];
             binaryVarTab[i] = binarySeq[index];
         }
