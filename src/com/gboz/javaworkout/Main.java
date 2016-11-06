@@ -108,13 +108,11 @@ public class Main {
     public static void ranking() {
         bubbleSort(A, w);
         int index;
-        String binaryVarTab[] = new String[k];
-        double doubleVarTab[] = new double[k];
         for (int i = 0; i < doubleSeq.length; i++) {
             index = ((int) (Math.random() * (((doubleSeq.length - 1)) + 1)));
             index = ((int) (Math.random() * (((index)) + 1)));
-            doubleVarTab[i] = doubleSeq[index];
-            binaryVarTab[i] = binarySeq[index];
+            doubleSeq[i] = doubleSeq[index];
+            binarySeq[i] = binarySeq[index];
         }
     }
 
