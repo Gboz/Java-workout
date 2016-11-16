@@ -14,7 +14,7 @@ public class Main {
         System.out.println(task2);
         System.out.println(task3);
 
-        task1.EditName("task 1 zmiana");
+        task1.EditName(task1.getName() + " test");
         task1.EditTime(3);
 
         System.out.println(task1);

@@ -35,4 +35,8 @@ public class Task implements TaskInterface{
                 ", time=" + time +
                 '}';
     }
+
+    public String getName() {
+        return name;
+    }
 }
