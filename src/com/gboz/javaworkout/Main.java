@@ -103,10 +103,6 @@ public class Main {
                 oneBeforeLastIndex--;
             }
         }
-    }
-
-    private static void ranking() {
-        bubbleSort(A, w);
         int index;
         for (int i = 0; i < doubleSeq.length; i++) {
             index = ((int) (Math.random() * (((doubleSeq.length - 1)) + 1)));
@@ -118,7 +114,6 @@ public class Main {
 
     private static void builderSelection() {
         System.out.println("\n##########Selekcja metodą rankingową BEGIN##########\n");
-        ranking();
         System.out.println("ciągi binarne: ");
         for (int i = 0; i < k; i++) {
             System.out.println(binarySeq[i]);
@@ -134,8 +129,47 @@ public class Main {
         System.out.println("\n##########Selekcja metodą rankingową END##########\n");
     }
 
+    //mutacja l3
+    static String replace(String binary_seq, int index, char replace) {
+        char[] chars = binary_seq.toCharArray(); //rozbicie łańcucha znaków na tablicę
+        chars[index] = replace; //podmiana w tablicy znaku na indexie na podany
+        return String.valueOf(chars); //zwrócenie Stringa z tablicy
+    }
+
+    public static void mutation(double pm, double A, double w, double a, double b, int m) {
+        for (int i = 0; i < binarySeq.length; i++) { //dla każdego łańcucha
+            for (int k = 0; k < binarySeq[i].length(); k++) { //dla każdego znaku w łańcuchu
+                double r = 0 + (1 - 0) * Math.random(); //losujemy liczbę z przedziału [0, 1] np.: 0.45525223
+                if (r < pm) { //sprawdzamy czy jest ona mniejsza od naszego prawdopodobieństwa mutacji pm (domyślnie 0.1)
+                    System.out.println("Zmutowano chromosom "+i+", miejsce "+k);
+                    binarySeq[i] = replace(binarySeq[i], k, (binarySeq[i].charAt(k) == 0) ? '1' : '0');
+                }
+            }
+            doubleSeq[i] = translate(binaryToDecimal(binarySeq[i]), a, b, m);
+        }
+    }
+
+    private static void builderMutation() {
+        System.out.println("\n##########Mutacja BEGIN##########\n");
+        mutation(0.1, A, w, a, b, m);
+        System.out.println("ciągi binarne: ");
+        for (int i = 0; i < k; i++) {
+            System.out.println(binarySeq[i]);
+        }
+        System.out.println("punkty: ");
+        for (int i = 0; i < k; i++) {
+            System.out.println(doubleSeq[i]);
+        }
+        System.out.println("wartości funkcji");
+        for (int i = 0; i < k; i++) {
+            System.out.println("x" + i + " = " + rastriginFunction(doubleSeq[i], A, w));
+        }
+        System.out.println("\n##########Mutacja END##########\n");
+    }
+
     public static void main(String[] args) {
         builderPopulation();
         builderSelection();
+        builderMutation();
     }
 }
