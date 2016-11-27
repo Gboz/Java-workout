@@ -131,16 +131,16 @@ public class Main {
 
     //mutacja l3
     static String replace(String binary_seq, int index, char replace) {
-        char[] chars = binary_seq.toCharArray(); //rozbicie łańcucha znaków na tablicę
-        chars[index] = replace; //podmiana w tablicy znaku na indexie na podany
-        return String.valueOf(chars); //zwrócenie Stringa z tablicy
+        char[] chars = binary_seq.toCharArray();
+        chars[index] = replace;
+        return String.valueOf(chars);
     }
 
     public static void mutation(double pm, double A, double w, double a, double b, int m) {
-        for (int i = 0; i < binarySeq.length; i++) { //dla każdego łańcucha
-            for (int k = 0; k < binarySeq[i].length(); k++) { //dla każdego znaku w łańcuchu
-                double r = 0 + (1 - 0) * Math.random(); //losujemy liczbę z przedziału [0, 1] np.: 0.45525223
-                if (r < pm) { //sprawdzamy czy jest ona mniejsza od naszego prawdopodobieństwa mutacji pm (domyślnie 0.1)
+        for (int i = 0; i < binarySeq.length; i++) {
+            for (int k = 0; k < binarySeq[i].length(); k++) {
+                double r = 0 + (1) * Math.random();
+                if (r < pm) {
                     System.out.println("Zmutowano chromosom "+i+", miejsce "+k);
                     binarySeq[i] = replace(binarySeq[i], k, (binarySeq[i].charAt(k) == 0) ? '1' : '0');
                 }
