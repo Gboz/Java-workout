@@ -1,5 +1,9 @@
 package com.gboz.javaworkout;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Main {
 
     static private double A = 10;
@@ -104,11 +108,20 @@ public class Main {
             }
         }
         int index;
+        String[] binaryTymcz = new String[k];
+        double[] doubleTymcz = new double[k];
         for (int i = 0; i < doubleSeq.length; i++) {
             index = ((int) (Math.random() * (((doubleSeq.length - 1)) + 1)));
             index = ((int) (Math.random() * (((index)) + 1)));
-            doubleSeq[i] = doubleSeq[index];
-            binarySeq[i] = binarySeq[index];
+            doubleTymcz[i] = doubleSeq[index];
+            binaryTymcz[i] = binarySeq[index];
+//            doubleSeq[i] = doubleSeq[index];
+//            binarySeq[i] = binarySeq[index];
+        }
+
+        for (int i = 0; i < doubleSeq.length; i++) {
+            doubleSeq[i] = doubleTymcz[i];
+            binarySeq[i] = binaryTymcz[i];
         }
     }
 
@@ -129,7 +142,7 @@ public class Main {
         System.out.println("\n##########Selekcja metodą rankingową END##########\n");
     }
 
-    //mutacja l3
+    //mutacja zajęcia 3
     static String replace(String binary_seq, int index, char replace) {
         char[] chars = binary_seq.toCharArray();
         chars[index] = replace;
@@ -142,7 +155,7 @@ public class Main {
                 double r = 0 + (1) * Math.random();
                 if (r < pm) {
                     System.out.println("Zmutowano chromosom "+i+", miejsce "+k);
-                    binarySeq[i] = replace(binarySeq[i], k, (binarySeq[i].charAt(k) == 0) ? '1' : '0');
+                    binarySeq[i] = replace(binarySeq[i], k, (binarySeq[i].charAt(k) == '0') ? '1' : '0');
                 }
             }
             doubleSeq[i] = translate(binaryToDecimal(binarySeq[i]), a, b, m);
@@ -167,9 +180,108 @@ public class Main {
         System.out.println("\n##########Mutacja END##########\n");
     }
 
+    //krzyżowanie i sukcesja
+    private static void crossover(double pc, double A, double w, double a, double b, int m) {
+        List indexList = new ArrayList();
+        for (int i = 0; i < binarySeq.length; i++) {
+            double r = 0 + (1 - 0) * Math.random();
+            if (r < pc) {
+                indexList.add(i);
+            }
+        }
+        Collections.shuffle(indexList);
+        if (indexList.size() % 2 != 0) {
+            indexList.remove(0 + (int)(Math.random() * ((indexList.size() - 1) + 1)));
+        }
+        System.out.println("Krzyżowanie pary: " + indexList);
+        String pattern = generateBinary(m);
+        System.out.println("Wzór krzyżowania: " + pattern);
+        char[] patternArray = pattern.toCharArray();
+        String[] tmpBinarySeq = new String[binarySeq.length];
+        for (int i = 0; i < indexList.size(); i += 2) {
+            tmpBinarySeq[(int) indexList.get(i)] = "";
+            tmpBinarySeq[(int) indexList.get(i + 1)] = "";
+            for (int j = 0; j < patternArray.length; j++) {
+                if (patternArray[j] == '0') {
+                    tmpBinarySeq[(int) indexList.get(i)] += binarySeq[(int) indexList.get(i)].charAt(j);
+                    tmpBinarySeq[(int) indexList.get(i + 1)] += binarySeq[(int) indexList.get(i + 1)].charAt(j);
+                } else {
+                    tmpBinarySeq[(int) indexList.get(i)] += binarySeq[(int) indexList.get(i + 1)].charAt(j);
+                    tmpBinarySeq[(int) indexList.get(i + 1)] += binarySeq[(int) indexList.get(i)].charAt(j);
+                }
+            }
+            binarySeq[(int) indexList.get(i)] = tmpBinarySeq[(int) indexList.get(i)];
+            binarySeq[(int) indexList.get(i + 1)] = tmpBinarySeq[(int) indexList.get(i + 1)];
+        }
+        for (int i = 0; i < binarySeq.length; i++) {
+            doubleSeq[i] = translate(binaryToDecimal(binarySeq[i]), a, b, m);
+        }
+    }
+
+    private static void builderCrossover() {
+        System.out.println("\n##########krzyżowanie i sukcesja BEGIN##########\n");
+        //epoki => 150
+        for (int generation = 0; generation < 150; generation++) {
+
+            System.out.println("###\n Po zastosowaniu selekcji metodą rankingową\n###");
+            bubbleSort(A, w);
+            System.out.println("###\nPunkty zakodowane binarnie\n###");
+            for (int i = 0; i < k; i++) {
+                System.out.println(binarySeq[i]);
+            }
+            System.out.println("###\nPunkty w formie rzeczywistej\n###");
+            for (int i = 0; i < k; i++) {
+                System.out.println(doubleSeq[i]);
+            }
+            System.out.println("###\nWartości funkcji dla odpowiednich punktów\n###");
+            for (int i = 0; i < k; i++) {
+                System.out.println("f(x" + i + ") = " + rastriginFunction(doubleSeq[i], A, w));
+            }
+
+            System.out.println("###\n Po zastosowaniu mutacji\n###");
+            mutation(0.2, A, w, a, b, m);
+            System.out.println("###\nPunkty zakodowane binarnie\n###");
+            for (int i = 0; i < k; i++) {
+                System.out.println(binarySeq[i]);
+            }
+            System.out.println("###\nPunkty w formie rzeczywistej\n###");
+            for (int i = 0; i < k; i++) {
+                System.out.println(doubleSeq[i]);
+            }
+            System.out.println("###\nWartości funkcji dla odpowiednich punktów\n###");
+            for (int i = 0; i < k; i++) {
+                System.out.println("f(x" + i + ") = " + rastriginFunction(doubleSeq[i], A, w));
+            }
+            System.out.println("###\n Po zastosowaniu krzyżowania\n###");
+            crossover(0.5, A, w, a, b, m);
+            System.out.println("###\nPunkty zakodowane binarnie\n###");
+            for (int i = 0; i < k; i++) {
+                System.out.println(binarySeq[i]);
+            }
+            System.out.println("###\nPunkty w formie rzeczywistej\n###");
+            for (int i = 0; i < k; i++) {
+                System.out.println(doubleSeq[i]);
+            }
+            System.out.println("###\nWartości funkcji dla odpowiednich punktów\n###");
+            for (int i = 0; i < k; i++) {
+                System.out.println("f(x" + i + ") = " + rastriginFunction(doubleSeq[i], A, w));
+            }
+        }
+        //znalezienie maksimum ze wszystkich punktów populacji
+        int max=0;
+        for (int i = 0; i < k; i++) {
+            if (rastriginFunction(doubleSeq[i], A, w) > rastriginFunction(doubleSeq[max], A, w)) {
+                max = i;
+            }
+        }
+        System.out.println("Maksimum globalne w punkcie " + doubleSeq[max]+", wynosi "+rastriginFunction(doubleSeq[max], A, w));
+        System.out.println("\n##########krzyżowanie i sukcesja END##########\n");
+    }
+
     public static void main(String[] args) {
         builderPopulation();
         builderSelection();
         builderMutation();
+        builderCrossover();
     }
 }
